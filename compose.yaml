@@ -1,0 +1,30 @@
+version: '4'
+
+services:
+  object-recognizer:
+    environment:
+      - QUEUELIMIT=${OBJREC_QUEUELIMIT}
+      - BROKER=${OBJREC_BROKER}
+      - HEALTHCHECKTIMEOUT=${OBJREC_HEALTHCHECKTIMEOUT}
+      - FRAMESTOPIC=${OBJREC_FRAMESTOPIC}
+      - CONSUMEGROUP=${OBJREC_CONSUMEGROUP}
+      - DETECTIONSTOPIC=${OBJREC_DETECTIONSTOPIC}
+      - AI_WORKERS=${OBJREC_AI_WORKERS}
+      - AI_TYPE=${OBJREC_AI_TYPE}
+      - AI_DEVICE=${OBJREC_AI_DEVICE}
+      - AI_CLASSES=${OBJREC_AI_CLASSES}
+      - AI_MODELPATH=${OBJREC_AI_MODELPATH}
+      - AI_DET2_CFGPATH=${OBJREC_AI_DET2_CFGPATH}
+    build:
+      args:
+        GITUSER: ${GITUSER}
+        GITPASS: ${GITPASS}
+        FTPUSER: ${FTPUSER}
+        FTPPASS: ${FTPPASS}
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
